@@ -1,0 +1,8 @@
+spring.kafka:
+  bootstrap-servers: 127.0.0.1:9092
+  template.default-topic: task-scheudler
+  listener.concurrency: 3
+
+logging.level:
+  org.springframework.web: DEBUG
+  com.dotterbear: DEBUG
