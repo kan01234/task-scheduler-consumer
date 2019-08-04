@@ -10,6 +10,13 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table
 public class Task {
+
+  public static final String DONE = "D";
+
+  public static final String INIT = "I";
+
+  public static final String PROCESSING = "P";
+
   @PrimaryKeyColumn(name = "id", ordinal = 2, type = PrimaryKeyType.CLUSTERED,
       ordering = Ordering.DESCENDING)
   private UUID id;
@@ -21,7 +28,7 @@ public class Task {
   private String data;
 
   @Column
-  private String state;
+  private String state = INIT;
 
   public UUID getId() {
     return id;

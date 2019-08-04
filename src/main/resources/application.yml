@@ -3,6 +3,11 @@ spring.kafka:
   template.default-topic: task-scheudler
   listener.concurrency: 3
 
+cassandra:
+  contactpoints: 127.0.0.1
+  port: 9142
+  keyspace: testKeySpace
+
 logging.level:
   org.springframework.web: DEBUG
   com.dotterbear: DEBUG
