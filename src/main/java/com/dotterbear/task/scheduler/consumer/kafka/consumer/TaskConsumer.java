@@ -11,7 +11,7 @@ public class TaskConsumer {
 
   private static final Logger logger = LoggerFactory.getLogger(TaskConsumer.class);
 
-  @KafkaListener(topics = {"scheduler-task"}, groupId = "add")
+  @KafkaListener(topics = {"scheduler-task"}, groupId = "scheduler-task-consumer-grp1", containerFactory = "kafkaListenerContainerFactory")
   public void listen(TaskDTO taskDto) {
     logger.debug("grp1 receive task: {}", taskDto);
   }

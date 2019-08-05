@@ -31,8 +31,13 @@ public class KafkaConfig {
 
   @Bean
   public ConsumerFactory<String, TaskDTO> consumerFactory() {
+    JsonDeserializer<TaskDTO> deserializer = new JsonDeserializer<>(TaskDTO.class);
+    deserializer.setRemoveTypeHeaders(false);
+    deserializer.addTrustedPackages("*");
+    deserializer.setUseTypeMapperForKey(true);
+
     return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(),
-        new JsonDeserializer<>(TaskDTO.class));
+        deserializer);
   }
 
   @Bean
