@@ -1,37 +1,29 @@
 package com.dotterbear.spring.kafka;
 
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.SchemaAction;
-import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
 @Configuration
-@EnableCassandraRepositories(basePackages = "com.dotterbear.spring.kafka.cassandra.repository")
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
-  @Value("${cassandra.contactpoints}")
-  private String contactPoints;
-
-  @Value("${cassandra.port}")
-  private int port;
-
-  @Value("${cassandra.keyspace}")
-  private String keySpace;
+  @Value("${spring.data.cassandra.keyspace-name}")
+  private String keyspace;
 
   @Override
-  protected String getKeyspaceName() {
-    return keySpace;
+  protected List<String> getStartupScripts() {
+    final String script =
+        "CREATE KEYSPACE IF NOT EXISTS " + keyspace + " WITH durable_writes = true"
+            + " AND replication = {'class' : 'SimpleStrategy', 'replication_factor' : 1};";
+    return Arrays.asList(script);
   }
 
   @Override
-  protected String getContactPoints() {
-    return contactPoints;
-  }
-
-  @Override
-  protected int getPort() {
-    return port;
+  protected List<String> getShutdownScripts() {
+    return Arrays.asList("DROP KEYSPACE IF EXISTS " + keyspace + ";");
   }
 
   @Override
@@ -39,4 +31,18 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     return SchemaAction.CREATE_IF_NOT_EXISTS;
   }
 
+  @Override
+  protected boolean getMetricsEnabled() {
+    return false;
+  }
+
+  @Override
+  protected String getKeyspaceName() {
+    return keyspace;
+  }
+
+  @Override
+  public String[] getEntityBasePackages() {
+    return new String[] {"com.dotterbear.spring.kafka.cassandra.entity"};
+  }
 }
