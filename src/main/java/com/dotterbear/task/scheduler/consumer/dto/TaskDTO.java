@@ -1,4 +1,4 @@
-package com.dotterbear.spring.kafka;
+package com.dotterbear.task.scheduler.consumer.dto;
 
 import java.io.Serializable;
 import java.util.Date;

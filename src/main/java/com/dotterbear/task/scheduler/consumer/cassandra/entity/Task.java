@@ -1,4 +1,4 @@
-package com.dotterbear.spring.kafka.cassandra.entity;
+package com.dotterbear.task.scheduler.consumer.cassandra.entity;
 
 import java.util.Date;
 import java.util.UUID;

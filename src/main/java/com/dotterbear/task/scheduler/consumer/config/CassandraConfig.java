@@ -1,4 +1,4 @@
-package com.dotterbear.spring.kafka;
+package com.dotterbear.task.scheduler.consumer.config;
 
 import java.util.Arrays;
 import java.util.List;

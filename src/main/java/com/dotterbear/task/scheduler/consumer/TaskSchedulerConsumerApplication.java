@@ -1,4 +1,4 @@
-package com.dotterbear.spring.kafka;
+package com.dotterbear.task.scheduler.consumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

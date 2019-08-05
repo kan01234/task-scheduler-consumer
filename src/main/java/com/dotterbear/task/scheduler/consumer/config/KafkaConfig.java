@@ -1,4 +1,4 @@
-package com.dotterbear.spring.kafka;
+package com.dotterbear.task.scheduler.consumer.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +13,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import com.dotterbear.task.scheduler.consumer.dto.TaskDTO;
 
 @Configuration
 public class KafkaConfig {
