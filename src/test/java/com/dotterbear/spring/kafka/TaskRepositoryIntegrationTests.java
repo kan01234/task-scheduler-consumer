@@ -3,7 +3,6 @@ package com.dotterbear.spring.kafka;
 import static org.junit.Assert.assertEquals;
 import java.util.Date;
 import java.util.Optional;
-import org.cassandraunit.spring.CassandraDataSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
