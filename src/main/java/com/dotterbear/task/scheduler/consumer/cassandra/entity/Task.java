@@ -19,6 +19,7 @@ public class Task {
   @Id
   private UUID id;
 
+  @Column
   private String state = INIT;
 
   @Indexed("name")

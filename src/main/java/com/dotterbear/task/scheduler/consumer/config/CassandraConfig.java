@@ -43,6 +43,6 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 
   @Override
   public String[] getEntityBasePackages() {
-    return new String[] {"com.dotterbear.spring.kafka.cassandra.entity"};
+    return new String[] {"com.dotterbear.task.scheduler.consumer.cassandra.entity"};
   }
 }
