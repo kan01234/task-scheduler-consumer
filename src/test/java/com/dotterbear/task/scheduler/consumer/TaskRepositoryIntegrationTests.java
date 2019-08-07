@@ -24,7 +24,7 @@ public class TaskRepositoryIntegrationTests {
   @Autowired
   private TaskRepository taskRepository;
 
-//  @Test
+  @Test
   public void saveTask() {
     Task task = random();
     taskRepository.save(task);

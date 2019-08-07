@@ -9,5 +9,5 @@ public interface TaskExecuteService {
 
   public List<Task> markProcessing();
 
-  public List<Task> execute();
+  public Task execute(Task task);
 }
