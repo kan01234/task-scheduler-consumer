@@ -9,6 +9,11 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Table
 public class Task implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+
   public static final String DONE = "D";
 
   public static final String INIT = "I";
