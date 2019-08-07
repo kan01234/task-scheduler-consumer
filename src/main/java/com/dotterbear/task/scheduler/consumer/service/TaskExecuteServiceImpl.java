@@ -29,7 +29,6 @@ public class TaskExecuteServiceImpl implements TaskExecuteService {
   @Override
   public Task execute(Task task) {
     logger.debug("execute, task: {}", task);
-    logger.info("execute task: {}", task);
     taskRepository.save(task.setState(task.DONE));
     return task;
   }
