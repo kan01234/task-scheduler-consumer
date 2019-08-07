@@ -21,12 +21,10 @@ import com.dotterbear.task.scheduler.consumer.dto.TaskDTO;
 @SpringBootTest
 public class TaskRepositoryIntegrationTests {
 
-  private static long randomCount = 0L;
-
   @Autowired
   private TaskRepository taskRepository;
 
-  @Test
+//  @Test
   public void saveTask() {
     Task task = random();
     taskRepository.save(task);
@@ -46,7 +44,7 @@ public class TaskRepositoryIntegrationTests {
 
   private Task random() {
     TaskDTO taskDto = new TaskDTO();
-    taskDto.setData("data" + randomCount++);
+    taskDto.setData("data");
     taskDto.setExecTs(new Date());
     return TaskBuilder.build(taskDto);
   }

@@ -50,32 +50,36 @@ public class Task implements Serializable {
     return id;
   }
 
-  public void setId(UUID id) {
+  public Task setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   public String getState() {
     return state;
   }
 
-  public void setState(String state) {
+  public Task setState(String state) {
     this.state = state;
+    return this;
   }
 
   public Date getExecTs() {
     return execTs;
   }
 
-  public void setExecTs(Date execTs) {
+  public Task setExecTs(Date execTs) {
     this.execTs = execTs;
+    return this;
   }
 
   public String getData() {
     return data;
   }
 
-  public void setData(String data) {
+  public Task setData(String data) {
     this.data = data;
+    return this;
   }
 
   @Override
