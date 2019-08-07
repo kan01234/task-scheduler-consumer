@@ -1,41 +1,68 @@
 package com.dotterbear.task.scheduler.consumer.cassandra.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table("task")
-public class Task {
+@Table
+public class Task implements Serializable {
 
-  @PrimaryKey
-  private TaskPrimaryKey pk;
+  public static final String DONE = "D";
 
-  @Column
+  public static final String INIT = "I";
+
+  public static final String PROCESSING = "P";
+
+  @Id
+  private UUID id;
+
+  private String state = INIT;
+
+  private Date execTs;
+
   private String data;
 
-  public Task() {
-  }
+  public Task() {}
 
   public Task(UUID id, Date execTs, String data) {
     super();
-    pk = new TaskPrimaryKey(id, execTs);
+    this.id = id;
+    this.execTs = execTs;
     this.data = data;
   }
 
-  public Task(UUID id, Date execTs, String state, String data) {
+  public Task(UUID id, Date execTs, String data, String state) {
     super();
-    pk = new TaskPrimaryKey(id, execTs, state);
+    this.id = id;
+    this.execTs = execTs;
     this.data = data;
+    this.state = state;
   }
 
-  public TaskPrimaryKey getPk() {
-    return pk;
+  public UUID getId() {
+    return id;
   }
 
-  public void setPk(TaskPrimaryKey pk) {
-    this.pk = pk;
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public String getState() {
+    return state;
+  }
+
+  public void setState(String state) {
+    this.state = state;
+  }
+
+  public Date getExecTs() {
+    return execTs;
+  }
+
+  public void setExecTs(Date execTs) {
+    this.execTs = execTs;
   }
 
   public String getData() {
@@ -48,7 +75,7 @@ public class Task {
 
   @Override
   public String toString() {
-    return "Task [pk=" + pk + ", data=" + data + "]";
+    return "Task [id=" + id + ", state=" + state + ", execTs=" + execTs + ", data=" + data + "]";
   }
 
 }
