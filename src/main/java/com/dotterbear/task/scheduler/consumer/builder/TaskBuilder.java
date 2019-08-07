@@ -9,10 +9,6 @@ public class TaskBuilder {
   public static Task build(TaskDTO taskDto) {
     if (taskDto == null)
       return null;
-    Task task = new Task();
-    task.setId(UUIDs.timeBased());
-    task.setData(taskDto.getData());
-    task.setExecTs(taskDto.getExecTs());
-    return task;
+    return new Task(UUIDs.timeBased(), taskDto.getExecTs(), taskDto.getData());
   }
 }

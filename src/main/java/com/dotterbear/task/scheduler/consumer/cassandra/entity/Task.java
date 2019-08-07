@@ -2,46 +2,40 @@ package com.dotterbear.task.scheduler.consumer.cassandra.entity;
 
 import java.util.Date;
 import java.util.UUID;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.Indexed;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table("task")
 public class Task {
 
-  public static final String DONE = "D";
-
-  public static final String INIT = "I";
-
-  public static final String PROCESSING = "P";
-
-  @Id
-  private UUID id;
-
-  @Column
-  private String state = INIT;
-
-  @Indexed("name")
-  private Date execTs;
+  @PrimaryKey
+  private TaskPrimaryKey pk;
 
   @Column
   private String data;
 
-  public UUID getId() {
-    return id;
+  public Task() {
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  public Task(UUID id, Date execTs, String data) {
+    super();
+    pk = new TaskPrimaryKey(id, execTs);
+    this.data = data;
   }
 
-  public Date getExecTs() {
-    return execTs;
+  public Task(UUID id, Date execTs, String state, String data) {
+    super();
+    pk = new TaskPrimaryKey(id, execTs, state);
+    this.data = data;
   }
 
-  public void setExecTs(Date execTs) {
-    this.execTs = execTs;
+  public TaskPrimaryKey getPk() {
+    return pk;
+  }
+
+  public void setPk(TaskPrimaryKey pk) {
+    this.pk = pk;
   }
 
   public String getData() {
@@ -52,17 +46,9 @@ public class Task {
     this.data = data;
   }
 
-  public String getState() {
-    return state;
-  }
-
-  public void setState(String state) {
-    this.state = state;
-  }
-
   @Override
   public String toString() {
-    return "Task [id=" + id + ", execTs=" + execTs + ", data=" + data + ", state=" + state + "]";
+    return "Task [pk=" + pk + ", data=" + data + "]";
   }
 
 }

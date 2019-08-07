@@ -21,12 +21,9 @@ public class TaskRepositoryIntegrationTests {
 
   @Test
   public void saveTask() {
-    Task task = new Task();
-    task.setId(UUIDs.timeBased());
-    task.setExecTs(new Date());
-    task.setData("data");
+    Task task = new Task(UUIDs.timeBased(), new Date(), "data");
     taskRepository.save(task);
-    Optional<Task> task2 = taskRepository.findById(task.getId());
+    Optional<Task> task2 = taskRepository.findById(task.getPk());
     assertEquals(task.toString(), task2.orElse(new Task()).toString());
   }
 }
