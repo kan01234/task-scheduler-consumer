@@ -29,8 +29,9 @@ public class AppNode implements Serializable {
     return id;
   }
 
-  public void setId(UUID id) {
+  public AppNode setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   public String getIp() {
