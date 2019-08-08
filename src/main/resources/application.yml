@@ -12,3 +12,6 @@ spring.data.cassandra:
 logging.level:
   org.springframework.web: DEBUG
   com.dotterbear: DEBUG
+
+com.dotterbear:
+  nodes.scheduler.assume.alive: 60
