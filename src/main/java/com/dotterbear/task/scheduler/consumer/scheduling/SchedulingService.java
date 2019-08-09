@@ -29,6 +29,10 @@ public class SchedulingService {
 
   @Scheduled(cron = "*/30 * * * * *")
   public void executeTasks() {
+    if (appNodeService.isMaster()) {
+      logger.debug("not is the master in the group, skipped");
+      return;
+    }
     logger.info("start executTasks");
     taskProducer.run();
     logger.info("end executTasks");
