@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.annotation.Order;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.dotterbear.task.scheduler.consumer.builder.AppNodeBuilder;
 import com.dotterbear.task.scheduler.consumer.cassandra.entity.AppNode;

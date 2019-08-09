@@ -1,7 +1,12 @@
 package com.dotterbear.task.scheduler.consumer.cassandra.service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,8 +64,33 @@ public class AppNodeService {
     return appNodeRepository.findById(appNode.getId()).get().getIsMaster();
   }
 
+  public void checkMaster() {
+    List<AppNode> appNodes = new ArrayList<AppNode>();
+    appNodeRepository.findAll().iterator().forEachRemaining(appNodes::add);
+    List<AppNode> masterNodes = appNodes.stream()
+        .filter(appNode -> appNode.getIsMaster() == true)
+        .collect(Collectors.toList());
+    AppNode masterNode = masterNodes.isEmpty() ? null : masterNodes.get(0);
+    if (!isAlive(masterNode)) {
+      if (masterNode != null)
+        appNodeRepository.save(masterNode.setIsMaster(Boolean.FALSE));
+      AppNode newMasterNode = appNodes.stream()
+          .min(Comparator.comparing(AppNode::getCreatedTs))
+          .filter(appNode -> appNode.getIsMaster() == Boolean.FALSE)
+          .orElseThrow(NoSuchElementException::new)
+          .setIsMaster(Boolean.TRUE);
+      appNodeRepository.save(newMasterNode);
+      logger.debug("master node changed, old: {}, new: {}", masterNode, newMasterNode);
+    }
+  }
+
   private Long calcAssumeAliveTs() {
     return System.currentTimeMillis() - assumeAlive * 1000;
   }
 
+  private Boolean isAlive(AppNode appNode) {
+    if (appNode == null || appNode.getPingTs() == null)
+      return Boolean.FALSE;
+    return appNode.getPingTs().getTime() >= calcAssumeAliveTs();
+  }
 }

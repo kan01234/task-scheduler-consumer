@@ -29,7 +29,7 @@ public class SchedulingService {
 
   @Scheduled(cron = "*/30 * * * * *")
   public void executeTasks() {
-    if (appNodeService.isMaster()) {
+    if (!appNodeService.isMaster()) {
       logger.debug("not is the master in the group, skipped");
       return;
     }
@@ -38,10 +38,19 @@ public class SchedulingService {
     logger.info("end executTasks");
   }
 
-  @Scheduled(cron = "*/15 * * * * *")
+  @Scheduled(cron = "0/15 * * * * *")
   public void executeSendHeartBeat() {
-    logger.debug("execute");
+    logger.debug("start executeSendHeartBeat");
     appNodeService.sendHeartBeat();
+    logger.debug("end executeSendHeartBeat");
   }
+
+  @Scheduled(cron = "0/30 * * * * *")
+  public void executeLeaderResolution() {
+    logger.debug("start executeLeaderResolution");
+    appNodeService.checkMaster();
+    logger.debug("end executeLeaderResolution");
+  }
+
 
 }

@@ -12,6 +12,9 @@ public interface AppNodeRepository extends CrudRepository<AppNode, UUID> {
   List<AppNode> findByPingTsGreaterThanEqual(Long time);
 
   @Query(allowFiltering = true)
+  List<AppNode> findByIsMaster(Boolean isMaster);
+
+  @Query(allowFiltering = true)
   List<AppNode> findByIsMasterAndPingTsGreaterThanEqual(Boolean isMaster, Long time);
 
 }
