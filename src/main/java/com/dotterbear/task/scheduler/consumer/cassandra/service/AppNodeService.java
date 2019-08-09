@@ -30,7 +30,8 @@ public class AppNodeService {
     // TODO set ip
     appNode = AppNodeBuilder.build("127.0.0.1");
     // TODO add db lock?
-    appNode.setIsMaster(appNodeRepository.findByIsMaster(Boolean.TRUE).isEmpty());
+    appNode.setIsMaster(appNodeRepository
+        .findByIsMasterAndPingTsGreaterThanEqual(Boolean.TRUE, calcAssumeAliveTs()).isEmpty());
     appNodeRepository.save(appNode);
   }
 
@@ -39,8 +40,7 @@ public class AppNodeService {
   }
 
   public List<AppNode> getAliveAppNodes() {
-    return appNodeRepository
-        .findByPingTsGreaterThanEqual(new Date().getTime() - assumeAlive * 1000);
+    return appNodeRepository.findByPingTsGreaterThanEqual(calcAssumeAliveTs());
   }
 
   public AppNode save(AppNode appNode) {
@@ -57,6 +57,10 @@ public class AppNodeService {
 
   public Boolean isMaster() {
     return appNodeRepository.findById(appNode.getId()).get().getIsMaster();
+  }
+
+  private Long calcAssumeAliveTs() {
+    return System.currentTimeMillis() - assumeAlive * 1000;
   }
 
 }

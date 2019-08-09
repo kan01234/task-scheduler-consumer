@@ -45,6 +45,11 @@ public class AppNodeTests {
     appNodeService.save(AppNodeBuilder.build("127.0.0.1").setIsMaster(Boolean.TRUE));
     appNodeService.init();
     assertEquals(appNodeService.isMaster(), Boolean.FALSE);
+    appNodeService.deleteAll();
+    appNodeService.save(AppNodeBuilder.build("127.0.0.1").setIsMaster(Boolean.TRUE)
+        .setPingTs(new Date(System.currentTimeMillis() - 70 * 1000)));
+    appNodeService.init();
+    assertEquals(appNodeService.isMaster(), Boolean.TRUE);
   }
 
 }
