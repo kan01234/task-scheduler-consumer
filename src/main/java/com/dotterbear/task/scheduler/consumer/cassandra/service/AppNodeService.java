@@ -29,6 +29,8 @@ public class AppNodeService {
   public void init() {
     // TODO set ip
     appNode = AppNodeBuilder.build("127.0.0.1");
+    // TODO add db lock?
+    appNode.setIsMaster(appNodeRepository.findByIsMaster(Boolean.TRUE).isEmpty());
     appNodeRepository.save(appNode);
   }
 

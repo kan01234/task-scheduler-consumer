@@ -8,6 +8,9 @@ import com.dotterbear.task.scheduler.consumer.cassandra.entity.AppNode;
 
 public interface AppNodeRepository extends CrudRepository<AppNode, UUID> {
 
- @Query(allowFiltering = true)
+  @Query(allowFiltering = true)
   List<AppNode> findByPingTsGreaterThanEqual(Long time);
+
+  List<AppNode> findByIsMaster(Boolean isMaster);
+
 }
