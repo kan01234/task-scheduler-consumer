@@ -55,4 +55,8 @@ public class AppNodeService {
     return appNodeRepository.save(appNode.setPingTs(new Date()));
   }
 
+  public Boolean isMaster() {
+    return appNodeRepository.findById(appNode.getId()).get().getIsMaster();
+  }
+
 }
