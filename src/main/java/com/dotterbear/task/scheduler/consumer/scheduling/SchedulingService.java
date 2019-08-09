@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import com.dotterbear.task.scheduler.consumer.cassandra.service.AppNodeService;
 
 @Component
 public class SchedulingService {
@@ -18,16 +19,25 @@ public class SchedulingService {
   @Autowired
   private ScheduledTaskConsumer taskConsumer;
 
+  @Autowired
+  private AppNodeService appNodeService;
+
   @PostConstruct
   public void init() {
     new Thread(taskConsumer).start();
   }
 
   @Scheduled(cron = "*/30 * * * * *")
-  public void executTasks() {
+  public void executeTasks() {
     logger.info("start executTasks");
     taskProducer.run();
     logger.info("end executTasks");
+  }
+
+  @Scheduled(cron = "*/15 * * * * *")
+  public void executeSendHeartBeat() {
+    logger.debug("execute");
+    appNodeService.sendHeartBeat();
   }
 
 }

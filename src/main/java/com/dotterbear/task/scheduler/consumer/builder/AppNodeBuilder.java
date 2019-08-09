@@ -8,7 +8,9 @@ public class AppNodeBuilder {
   public static AppNode build(String ip) {
     if (ip == null || ip.isEmpty())
       return null;
-    return new AppNode().setId(UUID.randomUUID()).setIp(ip);
+    return new AppNode()
+        .setId(UUID.randomUUID())
+        .setIp(ip);
   }
 
 }
