@@ -45,7 +45,7 @@ public class SchedulingService {
     logger.debug("end executeSendHeartBeat");
   }
 
-  @Scheduled(cron = "0/30 * * * * *")
+  @Scheduled(cron = "0 0/5 * * * *")
   public void executeLeaderResolution() {
     logger.debug("start executeLeaderResolution");
     appNodeService.checkMaster();
