@@ -21,10 +21,10 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     return Arrays.asList(script);
   }
 
-//  @Override
-//  protected List<String> getShutdownScripts() {
-//    return Arrays.asList("DROP KEYSPACE IF EXISTS " + keyspace + ";");
-//  }
+  @Override
+  protected List<String> getShutdownScripts() {
+    return Arrays.asList("DROP KEYSPACE IF EXISTS " + keyspace + ";");
+  }
 
   @Override
   public SchemaAction getSchemaAction() {
