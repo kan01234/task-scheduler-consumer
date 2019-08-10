@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.dotterbear.task.scheduler.consumer.builder.AppNodeBuilder;
@@ -22,6 +23,9 @@ public class AppNodeTests {
   @Autowired
   private AppNodeService appNodeService;
 
+  @Value("${com.dotterbear.nodes.scheduler.assume.alive}")
+  private int assumeAlive;
+
   @Test
   // testGetAllAliveAppNode
   public void test2() {
@@ -29,7 +33,7 @@ public class AppNodeTests {
     AppNode node1 = AppNodeBuilder.build("127.0.0.1");
     appNodeService.save(node1);
     AppNode node2 = AppNodeBuilder.build("127.0.0.2")
-        .setPingTs(new Date(System.currentTimeMillis() - 70 * 1000));
+        .setPingTs(new Date(System.currentTimeMillis() - (assumeAlive + 10) * 1000));
     appNodeService.save(node2);
     List<AppNode> aliveNodes = appNodeService.getAliveAppNodes();
     assertEquals(aliveNodes.size(), 1);
@@ -46,7 +50,7 @@ public class AppNodeTests {
     assertEquals(appNodeService.isMaster(), Boolean.FALSE);
     appNodeService.deleteAll();
     appNodeService.save(AppNodeBuilder.build("127.0.0.1").setIsMaster(Boolean.TRUE)
-        .setPingTs(new Date(System.currentTimeMillis() - 70 * 1000)));
+        .setPingTs(new Date(System.currentTimeMillis() - (assumeAlive + 10) * 1000)));
     appNodeService.init();
     assertEquals(appNodeService.isMaster(), Boolean.TRUE);
   }
