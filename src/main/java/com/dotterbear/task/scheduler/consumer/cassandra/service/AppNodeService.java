@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import org.assertj.core.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,18 +69,18 @@ public class AppNodeService {
     List<AppNode> appNodes = new ArrayList<AppNode>();
     appNodeRepository.findAll().iterator().forEachRemaining(appNodes::add);
     List<AppNode> masterNodes = appNodes.stream()
-        .filter(appNode -> appNode.getIsMaster() == true)
+        .filter(appNode -> appNode.getIsMaster() == Boolean.TRUE)
         .collect(Collectors.toList());
     AppNode masterNode = masterNodes.isEmpty() ? null : masterNodes.get(0);
     if (!isAlive(masterNode)) {
-      if (masterNode != null)
-        appNodeRepository.save(masterNode.setIsMaster(Boolean.FALSE));
       AppNode newMasterNode = appNodes.stream()
-          .min(Comparator.comparing(AppNode::getCreatedTs))
           .filter(appNode -> appNode.getIsMaster() == Boolean.FALSE)
+          .min(Comparator.comparing(AppNode::getCreatedTs))
           .orElseThrow(NoSuchElementException::new)
           .setIsMaster(Boolean.TRUE);
       appNodeRepository.save(newMasterNode);
+      if (masterNode != null)
+        appNodeRepository.save(masterNode.setIsMaster(Boolean.FALSE));
       logger.debug("master node changed, old: {}, new: {}", masterNode, newMasterNode);
     }
   }
