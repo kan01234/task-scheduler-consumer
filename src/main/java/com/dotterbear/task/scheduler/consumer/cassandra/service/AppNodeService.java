@@ -33,9 +33,13 @@ public class AppNodeService {
     // TODO set ip
     appNode = AppNodeBuilder.build("127.0.0.1");
     // TODO add db lock?
-    appNode.setIsMaster(appNodeRepository
-        .findByIsMasterAndPingTsGreaterThanEqual(Boolean.TRUE, calcAssumeAliveTs()).isEmpty());
+    appNode.setIsMaster(getAliveMasterNodes().isEmpty());
     appNodeRepository.save(appNode);
+  }
+
+  public List<AppNode> getAliveMasterNodes() {
+    return appNodeRepository.findByIsMasterAndPingTsGreaterThanEqual(Boolean.TRUE,
+        calcAssumeAliveTs());
   }
 
   public List<AppNode> getAliveAppNodes() {
@@ -61,15 +65,13 @@ public class AppNodeService {
   public void checkMaster() {
     List<AppNode> appNodes = getAliveAppNodes();
     List<AppNode> masterNodes = appNodes.stream()
-        .filter(appNode -> appNode.getIsMaster() == Boolean.TRUE)
-        .collect(Collectors.toList());
+        .filter(appNode -> appNode.getIsMaster() == Boolean.TRUE).collect(Collectors.toList());
     AppNode masterNode = masterNodes.isEmpty() ? null : masterNodes.get(0);
     if (!isAlive(masterNode)) {
-      AppNode newMasterNode = appNodes.stream()
-          .filter(appNode -> appNode.getIsMaster() == Boolean.FALSE)
-          .min(Comparator.comparing(AppNode::getCreatedTs))
-          .orElseThrow(NoSuchElementException::new)
-          .setIsMaster(Boolean.TRUE);
+      AppNode newMasterNode =
+          appNodes.stream().filter(appNode -> appNode.getIsMaster() == Boolean.FALSE)
+              .min(Comparator.comparing(AppNode::getCreatedTs))
+              .orElseThrow(NoSuchElementException::new).setIsMaster(Boolean.TRUE);
       appNodeRepository.save(newMasterNode);
       if (masterNode != null)
         appNodeRepository.save(masterNode.setIsMaster(Boolean.FALSE));
