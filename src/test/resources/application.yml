@@ -14,4 +14,4 @@ logging.level:
   com.dotterbear: DEBUG
 
 com.dotterbear:
-  nodes.scheduler.assume.alive: 5
+  nodes.scheduler.assume.alive: 10

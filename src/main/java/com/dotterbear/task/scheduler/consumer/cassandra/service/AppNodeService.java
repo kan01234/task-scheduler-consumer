@@ -1,5 +1,7 @@
 package com.dotterbear.task.scheduler.consumer.cassandra.service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -30,8 +32,13 @@ public class AppNodeService {
 
   @PostConstruct
   public void init() {
-    // TODO set ip
-    appNode = AppNodeBuilder.build("127.0.0.1");
+    String ip = "";
+    try {
+      ip = InetAddress.getLocalHost().getHostAddress();
+    } catch (UnknownHostException e) {
+      logger.error("fail to get ip", e);
+    }
+    appNode = AppNodeBuilder.build(ip);
     // TODO add db lock?
     appNode.setIsMaster(getAliveMasterNodes().isEmpty());
     appNodeRepository.save(appNode);
