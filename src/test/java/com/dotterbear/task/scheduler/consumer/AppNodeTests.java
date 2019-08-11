@@ -41,6 +41,24 @@ public class AppNodeTests {
   }
 
   @Test
+  // test check master
+  public void test3() {
+    appNodeService.deleteAll();
+    AppNode masterNode =
+        appNodeService.save(AppNodeBuilder.build("127.0.0.1").setIsMaster(Boolean.TRUE));
+    AppNode appNode1 =
+        appNodeService.save(AppNodeBuilder.build("127.0.0.2").setIsMaster(Boolean.FALSE));
+    AppNode appNode2 =
+        appNodeService.save(AppNodeBuilder.build("127.0.0.3").setIsMaster(Boolean.FALSE));
+    AppNode dbMasterNode;
+    dbMasterNode = appNodeService.getAliveMasterNodes().get(0);
+    assertEquals(masterNode.getId(), dbMasterNode.getId());
+    appNodeService.checkMaster();
+    dbMasterNode = appNodeService.getAliveMasterNodes().get(0);
+    assertEquals(masterNode.getId(), dbMasterNode.getId());
+  }
+
+  @Test
   // testAppNodeIsMasterInit
   public void test1() {
     assertEquals(appNodeService.isMaster(), Boolean.TRUE);
