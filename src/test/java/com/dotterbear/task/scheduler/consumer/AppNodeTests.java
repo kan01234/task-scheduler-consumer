@@ -56,6 +56,17 @@ public class AppNodeTests {
     appNodeService.checkMaster();
     dbMasterNode = appNodeService.getAliveMasterNodes().get(0);
     assertEquals(masterNode.getId(), dbMasterNode.getId());
+    try {
+      Thread.sleep(assumeAlive * 1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    // assume master node down
+    appNodeService.save(appNode1.setPingTs(new Date()));
+    appNodeService.save(appNode2.setPingTs(new Date()));
+    appNodeService.checkMaster();
+    dbMasterNode = appNodeService.getAliveMasterNodes().get(0);
+    assertEquals(appNode1.getId(), dbMasterNode.getId());
   }
 
   @Test
