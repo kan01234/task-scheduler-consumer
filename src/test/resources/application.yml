@@ -1,0 +1,17 @@
+spring.kafka:
+  bootstrap-servers: 127.0.0.1:9092
+  template.default-topic: task-scheudler
+  listener.concurrency: 3
+
+spring.data.cassandra:
+  contact-points: 127.0.0.1
+  port: 9042
+  keyspace-name: local_test
+  schema-action: CREATE_IF_NOT_EXISTS
+
+logging.level:
+  org.springframework.web: DEBUG
+  com.dotterbear: DEBUG
+
+com.dotterbear:
+  nodes.scheduler.assume.alive: 5
