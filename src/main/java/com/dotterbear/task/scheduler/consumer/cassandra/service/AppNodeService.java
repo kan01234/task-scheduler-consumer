@@ -1,6 +1,5 @@
 package com.dotterbear.task.scheduler.consumer.cassandra.service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -39,10 +38,6 @@ public class AppNodeService {
     appNodeRepository.save(appNode);
   }
 
-  public Iterable<AppNode> findAll() {
-    return appNodeRepository.findAll();
-  }
-
   public List<AppNode> getAliveAppNodes() {
     return appNodeRepository.findByPingTsGreaterThanEqual(calcAssumeAliveTs());
   }
@@ -64,8 +59,7 @@ public class AppNodeService {
   }
 
   public void checkMaster() {
-    List<AppNode> appNodes = new ArrayList<AppNode>();
-    appNodeRepository.findAll().iterator().forEachRemaining(appNodes::add);
+    List<AppNode> appNodes = getAliveAppNodes();
     List<AppNode> masterNodes = appNodes.stream()
         .filter(appNode -> appNode.getIsMaster() == Boolean.TRUE)
         .collect(Collectors.toList());
