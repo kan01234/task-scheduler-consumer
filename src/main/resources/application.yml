@@ -14,4 +14,5 @@ logging.level:
   com.dotterbear: DEBUG
 
 com.dotterbear:
+  task.consumer.thread: 5
   nodes.scheduler.assume.alive: 120

@@ -1,9 +1,12 @@
 package com.dotterbear.task.scheduler.consumer.scheduling;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.dotterbear.task.scheduler.consumer.cassandra.service.AppNodeService;
@@ -22,9 +25,14 @@ public class SchedulingService {
   @Autowired
   private AppNodeService appNodeService;
 
+  @Value("${com.dotterbear.task.consumer.thread}")
+  private int thread;
+
   @PostConstruct
   public void init() {
-    new Thread(taskConsumer).start();
+    ExecutorService executorService = Executors.newFixedThreadPool(thread);
+    for(int i = 0; i < thread; i++)
+      executorService.execute(taskConsumer);
   }
 
   @Scheduled(cron = "*/30 * * * * *")
