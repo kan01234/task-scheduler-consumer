@@ -19,7 +19,7 @@ import com.dotterbear.task.scheduler.consumer.dto.TaskDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TaskRepositoryIntegrationTests {
+public class TaskTests {
 
   @Autowired
   private TaskRepository taskRepository;
