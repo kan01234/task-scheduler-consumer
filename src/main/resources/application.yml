@@ -4,7 +4,7 @@ spring.kafka:
   listener.concurrency: 3
 
 spring.data.cassandra:
-  contact-points: 172.22.0.2
+  contact-points: cassandra
   port: 9042
   keyspace-name: local_test
   schema-action: CREATE_IF_NOT_EXISTS

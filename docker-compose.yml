@@ -3,7 +3,6 @@ services:
   task-scheduler-consumer:
     image: com.dotterbear/task-scheduler-consumer
     networks:
-      - default
       - task-scheduler-network
 networks:
   task-scheduler-network:

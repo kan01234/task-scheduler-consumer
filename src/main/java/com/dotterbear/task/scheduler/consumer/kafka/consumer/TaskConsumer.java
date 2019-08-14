@@ -10,7 +10,7 @@ import com.dotterbear.task.scheduler.consumer.cassandra.entity.Task;
 import com.dotterbear.task.scheduler.consumer.cassandra.repository.TaskRepository;
 import com.dotterbear.task.scheduler.consumer.dto.TaskDTO;
 
-//@Component
+@Component
 public class TaskConsumer {
 
   private static final Logger logger = LoggerFactory.getLogger(TaskConsumer.class);
