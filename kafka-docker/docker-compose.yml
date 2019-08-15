@@ -1,15 +1,22 @@
 version: '3'
 services:
-  zookeeper:
+  ts-zk:
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
-  kafka:
+    networks:
+      - task-scheduler-network
+  ts-kafka:
     build: .
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_HOST_NAME: ${DOCKER_KAFKA_HOST}
+      KAFKA_ZOOKEEPER_CONNECT: ts-zk:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - task-scheduler-network
+networks:
+  task-scheduler-network:
+    external: true

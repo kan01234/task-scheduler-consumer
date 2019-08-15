@@ -1,8 +1,14 @@
 version: '3'
 services:
-  cassandra:
+  ts-cassandra:
     image: cassandra
     ports:
       - "9042:9042"
+    networks:
+      - task-scheduler-network
+networks:
+  task-scheduler-network:
+    external: true
+
 #    volumes:
 #      - /var/run/docker.sock:/var/run/docker.sock

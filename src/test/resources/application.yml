@@ -1,10 +1,10 @@
 spring.kafka:
-  bootstrap-servers: 127.0.0.1:9092
+  bootstrap-servers: kafka:9092
   template.default-topic: task-scheudler
   listener.concurrency: 3
 
 spring.data.cassandra:
-  contact-points: 127.0.0.1
+  contact-points: 10.0.0.1
   port: 9042
   keyspace-name: local_test
   schema-action: CREATE_IF_NOT_EXISTS
@@ -15,4 +15,4 @@ logging.level:
 
 com.dotterbear:
   task.consumer.thread: 5
-  nodes.scheduler.assume.alive: 120
+  nodes.scheduler.assume.alive: 10
