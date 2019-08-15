@@ -4,8 +4,8 @@ services:
     # image: com.dotterbear/task-scheduler-consumer
     build: .
     environment:
-      spring.data.cassandra.contact-points: cassandra
-      spring.kafka.bootstrap-servers: kafka:9092
+      spring.data.cassandra.contact-points: ts-cassandra
+      spring.kafka.bootstrap-servers: ts-kafka:9092
     networks:
       - task-scheduler-network
 networks:

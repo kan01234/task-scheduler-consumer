@@ -1,6 +1,6 @@
 version: '3'
 services:
-  cassandra:
+  ts-cassandra:
     image: cassandra
     ports:
       - "9042:9042"
