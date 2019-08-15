@@ -1,7 +1,11 @@
 version: '3'
 services:
   task-scheduler-consumer:
-    image: com.dotterbear/task-scheduler-consumer
+    # image: com.dotterbear/task-scheduler-consumer
+    build: .
+    environment:
+      spring.data.cassandra.contact-points: cassandra
+      spring.kafka.bootstrap-servers: kafka:9092
     networks:
       - task-scheduler-network
 networks:
