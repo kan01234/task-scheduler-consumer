@@ -13,6 +13,7 @@ cd ./kafka-docker;
 docker-compose up;
 ```
 2.1 stop Kafka
+
 do this step, if application can't find leader of partition
 ```bash
 cd ./kafka-docker;
