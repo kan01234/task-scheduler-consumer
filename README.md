@@ -22,5 +22,6 @@ docker-compose rm -svf; docker-compose up;
 
 3. start application
 ```bash
+mvn clean package;
 docker-compose up;
 ```
