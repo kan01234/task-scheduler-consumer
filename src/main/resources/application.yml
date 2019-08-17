@@ -16,3 +16,6 @@ logging.level:
 com.dotterbear:
   task.consumer.thread: 5
   nodes.scheduler.assume.alive: 120
+  cassandra.connection.retry:
+    after: 5000
+    limit: 3
